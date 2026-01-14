@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 
 totalfoundrows = 0
 deviceinformation = ""
-devicetype = ""
+fulldeviceinformation = ""
 
 class Send_EventRaw(RMQMessageSender):
     """Send data via backhaul rewrite module."""
@@ -125,7 +125,7 @@ class Send_EventRaw(RMQMessageSender):
         conn = sqlite3.connect(self.db_raw_path)
         cursor = conn.cursor()
 
-        global deviceinformation, devicetype
+        global deviceinformation, fulldeviceinformation
         
         cursor.execute('''
             SELECT * FROM camera;
@@ -134,7 +134,7 @@ class Send_EventRaw(RMQMessageSender):
         rows = cursor.fetchall()
         
         for row in rows:
-            deviceinformation = row
+            fulldeviceinformation = row
             
         cursor.execute('''
             SELECT companyserial FROM camera;
@@ -174,4 +174,5 @@ if __name__ == "__main__":
         sender.close_connection()
         
     print(f'[INFO] Total rows of records found: {totalfoundrows}')
-    print(f'[INFO] Device Info: {deviceinformation}')
+    print(f'[INFO] Device Info: {fulldeviceinformation}')
+    print(f'[INFO] Device Company Serial: {deviceinformation}')
