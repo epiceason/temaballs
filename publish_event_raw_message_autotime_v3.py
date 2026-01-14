@@ -106,7 +106,7 @@ class Send_EventRaw(RMQMessageSender):
 
 
     def get_device_data(self):
-        self.db_raw_path = "/home/pi/Raspicam/raspicam/camera.db"
+        self.db_raw_path = "/home/pi/Raspicam/raspicam"
         conn = sqlite3.connect(self.db_raw_path)
         cursor = conn.cursor()
 
