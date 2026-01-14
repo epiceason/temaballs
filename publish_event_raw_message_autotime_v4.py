@@ -173,6 +173,14 @@ if __name__ == "__main__":
     finally:
         sender.close_connection()
         
+    dev_serial = "Unknown"
+    try:
+        with open('/proc/device-tree/serial-number', 'r') as f:
+            dev_serial = f.read().strip('\x00').strip()
+    except Exception as e:
+        dev_serial = f"Error reading serial: {e}"
+
     print(f'[INFO] Total rows of records found: {totalfoundrows}')
     print(f'[INFO] Device Info: {fulldeviceinformation}')
     print(f'[INFO] Device Company Serial: {deviceinformation}')
+    print(f'[INFO] Device Serial: {dev_serial}')
